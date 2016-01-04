@@ -1,0 +1,42 @@
+use java lang .
+def var = 0.
+def count =0.
+while count <10 do
+var=var+1+var.
+count=count+1.
+stop
+print 'sum of first 10 numbers is '+var.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# your name wi-fi? Because I feel a strong connection. ;-)
+#Is your name Google? Because you have everything I am searching for. ;-)
+#Are you a Java applet? Because you make me feel GUI inside. ;-)
+#Would you like to come over to my 127.0.0.1? ;-)
+#I don't see women as objects. I consider each to be in a class of her own. ;-)
+
+#I have unknowingly been preparing to answer this question for years. I have a lot of IT-related pickup lines in my mental database.  You never know when you might need one. :-)

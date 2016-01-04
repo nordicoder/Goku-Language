@@ -1,0 +1,245 @@
+options
+{
+	JDK_VERSION ="1.7";
+	STATIC = false;
+}
+PARSER_BEGIN(Paper)
+
+public class Paper
+{}
+PARSER_END(Paper)
+
+SKIP :
+{
+  " "
+|  "\t"
+| "\n"
+| "\r"
+| <"#" (~["\n","\r"])* ("\n"|"\r"|"\r\n") >
+}
+TOKEN : /* KEYWORDS */
+{
+	< REQUERE: "use" >
+| 	< IF: "if" >
+| 	< WHILE: "while" >
+| 	< DO: "do" >
+| 	< STOP: "stop" >
+| 	< DEF: "def" >
+| 	< INPUT: "get_input" >
+| 	< OUTPUT: "print" >
+|   < THEN: "then" >
+| 	< ELSE: "else" >
+
+}
+
+TOKEN: //details needde
+{
+    < DOT: "." >
+| 	< COLON: ":" >
+| 	< EQ: "==" >
+| 	< GT: ">"  >
+| 	< LT: "<"  >
+| 	< GE: ">=" >
+| 	< LE: "<=" >
+| 	< NE: "!=" >
+| 	< PLUS: "+">
+| 	< MINUS: "-" >
+| 	< MUL: "*" >
+| 	< DIV: "/" >
+| 	< MOD: "%" >
+| 	< ASSIGN: "=" >
+
+}
+
+
+< DEFAULT > TOKEN: //identifiers
+{
+	< IDENTIFIER: <LETTER> (<LETTER>|<DIGIT >)* >
+	|  < #LETTER: ["_","a"-"z","A"-"Z"] >
+|  < #DIGIT: ["0"-"9"] >
+| < INTEGER_LITERAL: ["1"-"9"] (["0"-"9"])* | "0"   >
+|  <SSLSTART: "'">  : SSL
+}
+
+< SSL> TOKEN:
+{
+  < SSLEND: "'">: DEFAULT}
+< SSL> MORE:
+{
+  < (~[])>}
+
+void StringArg1():{}
+{
+  	< SSLSTART>< SSLEND>}
+
+void Start():{}
+{
+	(
+	  Require() "."	)+
+	(
+    StatementExpression()
+  	)*
+}
+
+void Require():{}
+{
+	"use"
+	(
+	  < IDENTIFIER>	)+
+}
+
+void MathExpression():{}
+{	AdditionExpression()
+}
+
+void AdditionExpression():{}
+{
+  MultiplicativeExpression() ( ("+"|"-") MultiplicativeExpression() )*}
+
+void MultiplicativeExpression():{}
+{
+  UnaryExpression() ( ("*"|"/"|"%") UnaryExpression() )*}
+
+void UnaryExpression():{}
+{
+   "(" MathExpression() ")" |  LOOKAHEAD(3) JavaStaticMethods() | < INTEGER_LITERAL > |  LOOKAHEAD(2)VariableName() |StringArg1() 
+}
+
+/* Start Simple Relational Test */
+void RelationalExprssion():{}
+{
+	RelationalEqualityExpression()
+}
+
+void RelationalEqualityExpression():{}
+{
+	RelationalGreaterExpression()
+	[
+	  (
+	     "==" | "!="
+	  )
+	  RelationalGreaterExpression()
+	]
+}
+
+void RelationalGreaterExpression():{}
+{
+	RelationalLessExpression()
+	[
+	  (
+	     ">" | ">="
+	  )
+	   RelationalLessExpression()
+	]
+}
+
+void RelationalLessExpression():{}
+{
+	UnaryRelational()
+	[
+	  (
+	     "<" | "<="
+	  )
+	  
+	  UnaryRelational()
+	  
+	]
+}
+
+void UnaryRelational():{}
+{
+	   MathExpression()	
+}
+
+void IfExpression():{}
+{
+	"if" RelationalExprssion() "then"
+		(
+		  StatementExpression()
+		) *
+	"stop"
+}
+
+void IfElseExpression():{}
+{
+	"if" RelationalExprssion() "then"
+		(
+		  StatementExpression()
+		) *
+	"else"
+		(
+		  StatementExpression()
+		) *
+	"stop"
+}
+
+void WhileExpression():{}
+{
+	"while" RelationalExprssion() "do"
+		(
+		  StatementExpression()
+		) *
+	"stop"
+}
+
+void InputGetter():{}
+{
+	"get_input" VariableName() "."
+}
+
+void VariableDeclaration():{}
+{
+	"def" VariableName() "=" MathExpression() "."
+}
+
+void VariableAssign():
+{
+}
+{
+	VariableName() "="  MathExpression() "."
+} 
+
+void VariableName():{}
+{ 
+	< IDENTIFIER >
+}
+
+void JavaStaticMethods():{}
+{
+	< IDENTIFIER > /* Class Name */
+	(
+	  ":" < IDENTIFIER > /* Member or Method */
+	)+
+
+	(
+	  MethodArg() | "( )"
+	) "."
+
+ 
+
+	  /**** fuckerr  :- f0:-identifier f1:- nodelist f2:- nodechoice f2.0:-  */
+}
+
+void MethodArg():{}
+{
+  "(" MathExpression() ( "," MathExpression() )* ")"
+}
+
+
+void Printout():{}
+{
+  "print" MathExpression() "."}
+
+
+void StatementExpression():{} 
+{
+  VariableDeclaration()
+| LOOKAHEAD(2) VariableAssign()
+| LOOKAHEAD(2) JavaStaticMethods()
+| LOOKAHEAD(2)IfElseExpression()
+| WhileExpression()
+| InputGetter()
+| IfExpression()
+| Printout()
+
+}

@@ -1,0 +1,6 @@
+use java lang .
+def var = 0 .
+print 'give a number whose square is to be found'.
+get_input var .
+def square = var*var .
+print 'square is '+ square .

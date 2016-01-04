@@ -1,0 +1,48 @@
+use java lang .# you can use any valid java package, but only for using their static functions
+def var = 0 .
+print 'give a number whose square is to be found'.
+get_input var.
+def str='omkar'.
+#def ans=str+' hava' . This is a comment
+def ans= var*var.
+print 'answer is '+ans.
+
+
+if ans ==4 then
+print 'yes we are right'.
+else
+print 'fackar'.
+stop
+
+while ans > 0 do
+print 'time in millis is'+System:currentTimeMillis( ). .# theres  a jhol here while using static java functions, two '.' are needed and ( ) is needed instead of()
+ans=ans-1.
+print 'ans is '+ans.
+stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
