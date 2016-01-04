@@ -1,1 +1,48 @@
 
+home brewed Scripting language named 'GOKU' !!!!
+Very basic. can be used for trivial purposes like finding factorials and stuff and to display messages and to use any java static fiunction eg:- finding milliseonds since epoch you can use System:currentTimeMillis( ). . in GOKU !!!
+You can use it for doing some very basic things asap !!!
+Link for the same jar file containing interpreter is
+https://drive.google.com/…/0BxjrnqlFzIrcZ2x1MWR1NlJUU…/view…
+
+example usage is
+use java lang .# you can use any valid java package, but only for using their static functions
+def var = 0 .
+print 'give a number whose square is to be found'.
+get_input var.
+def str='omkar'.
+‪#‎def‬ ans=str+' hava' . This is a comment
+def ans= var*var.
+print 'answer is '+ans.
+
+if ans ==4 then
+print 'yes we are right'.
+else
+print 'fackar'.
+stop
+while ans > 0 do
+print 'time in millis is'+System:currentTimeMillis( ). .# theres a jhol here while using static java functions, two '.' are needed and ( ) is needed instead of()
+ans=ans-1.
+print 'ans is '+ans.
+stop
+
+OUTPUT:-
+Microsoft Windows [Version 6.3.9600]
+(c) 2013 Microsoft Corporation. All rights reserved.
+C:\Users\OMKAR>cd Documents
+C:\Users\OMKAR\Documents>cd "Goku Language"
+C:\Users\OMKAR\Documents\Goku Language>java -jar goku.jar trial.kar
+give a number whose square is to be found
+Input pls
+2
+answer is 4
+yes we are right
+time in millis is1417874540025
+ans is 3
+time in millis is1417874540025
+ans is 2
+time in millis is1417874540025
+ans is 1
+time in millis is1417874540025
+ans is 0
+C:\Users\OMKAR\Documents\Goku Language>
